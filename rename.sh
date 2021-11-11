@@ -1,0 +1,2 @@
+flutter pub add flutter_rename_app
+flutter pub run flutter_rename_app
