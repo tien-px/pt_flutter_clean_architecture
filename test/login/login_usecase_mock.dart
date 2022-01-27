@@ -1,22 +1,44 @@
-import 'package:pt_architecture/src/validation/validation_result.dart';
+import 'package:pt_clean_architecture/domain/usecase/dto/login_dto.dart';
 import 'package:pt_clean_architecture/scenes/login/login_usecase.dart';
+import 'package:pt_flutter_architecture/pt_flutter_architecture.dart';
 
 class LoginSceneUseCaseMock implements LoginSceneUseCaseType {
+  final useCase = LoginSceneUseCase();
+  /// Validate Email
+  bool validateEmailCalled = false;
+  ValidationResult? validateEmailReturnValue;
+
   @override
   ValidationResult validateEmail(String email) {
-    // TODO: implement validateEmail
-    throw UnimplementedError();
+    validateEmailCalled = true;
+    validateEmailReturnValue = validateEmailReturnValue ?? useCase.validateEmail(email);
+    return validateEmailReturnValue!;
   }
+
+  /// Validate Email
+  bool validatePasswordCalled = false;
+  ValidationResult? validatePasswordReturnValue;
 
   @override
   ValidationResult validatePassword(String password) {
-    // TODO: implement validatePassword
-    throw UnimplementedError();
+    validatePasswordCalled = true;
+    validatePasswordReturnValue = validatePasswordReturnValue ?? useCase.validatePassword(password);
+    return validatePasswordReturnValue!;
   }
 
+  /// Validate Email
+  bool loginCalled = false;
+  Stream<void> loginReturnValue = Stream<void>.value(null);
+
   @override
-  Stream<void> login(String username, String password) {
-    // TODO: implement login
-    throw UnimplementedError();
+  Stream<void> login(LoginDto dto) {
+    loginCalled = true;
+    return loginReturnValue;
+  }
+
+  bool hideKeyboardCalled = false;
+  @override
+  void hideKeyboard() {
+    hideKeyboardCalled = true;
   }
 }

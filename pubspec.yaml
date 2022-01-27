@@ -17,14 +17,19 @@ dependencies:
   flutter_screenutil: ^5.0.0+2
   # Clean Architecture
   tuple: ^2.0.0
-  pt_architecture:
-    path: ../pt_architecture/
-  rxdart: ^0.27.1
+  # FIXME
+#  pt_flutter_architecture:
+#    git:
+#      url: https://github.com/tien-px/pt_flutter_architecture
+  pt_flutter_architecture:
+    path: C:\Users\Axe PC\Documents\Projects\Github\pt_flutter_architecture
   # Font
   cupertino_icons: ^1.0.2
-  get: ^4.3.8
+  enum_to_string: ^2.0.1
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 
@@ -38,21 +43,35 @@ flutter_rename_app:
 flutter:
   uses-material-design: true
   assets:
-    - lib/assets/translations/
+    - lib/assets/i18n/
     - lib/assets/images/
-#  fonts:
-#    - family: Roboto
-#      fonts:
-#        - asset: lib/assets/fonts/Roboto-Bold.ttf
-#          weight: 700
-#        - asset: lib/assets/fonts/Roboto-Regular.ttf
-#        - asset: lib/assets/fonts/Roboto-Thin.ttf
-#          weight: 300
-#        - asset: lib/assets/fonts/Roboto-Italic.ttf
-#          style: italic
-#    - family: Inter
-#      fonts:
-#        - asset: lib/assets/fonts/Inter-Bold.ttf
-#        - asset: lib/assets/fonts/Inter-Medium.ttf
-#        - asset: lib/assets/fonts/Inter-Regular.ttf
-#        - asset: lib/assets/fonts/Inter-Semi-Bold.ttf
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: lib/assets/fonts/Roboto/Roboto-Thin.ttf
+          weight: 100
+        - asset: lib/assets/fonts/Roboto/Roboto-Light.ttf
+          weight: 300
+        - asset: lib/assets/fonts/Roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: lib/assets/fonts/Roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: lib/assets/fonts/Roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: lib/assets/fonts/Roboto/Roboto-Black.ttf
+          weight: 900
+        - asset: lib/assets/fonts/Roboto/Roboto-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: lib/assets/fonts/Roboto/Roboto-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: lib/assets/fonts/Roboto/Roboto-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: lib/assets/fonts/Roboto/Roboto-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: lib/assets/fonts/Roboto/Roboto-BlackItalic.ttf
+          weight: 900
+          style: italic

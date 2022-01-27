@@ -1,34 +1,34 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pt_architecture/pt_architecture.dart';
-import 'package:pt_clean_architecture/scenes/login/login_binding.dart';
-import 'package:pt_clean_architecture/scenes/login/login_view.dart';
+import 'package:pt_clean_architecture/foundation/base.dart';
+import 'package:pt_flutter_architecture/pt_flutter_architecture.dart';
 
 import 'app_viewmodel.dart';
 
 class AppView extends RxView<AppViewModel> {
-  late AppVMI input;
-  late AppVMO output;
+  late final AppVMI input;
+  late final AppVMO output;
+
+  AppView({required viewModel}) : super(viewModel: viewModel);
 
   final items = [
     ListItem('Login', Icons.login, ListItemScene.login),
     ListItem('Demo List', Icons.list, ListItemScene.demoList),
     ListItem('Demo List With Load More', Icons.list_alt,
-        ListItemScene.demoListloadMore)
+        ListItemScene.demoListLoadMore)
   ];
 
   @override
   void bindViewModel() {
     input = AppVMI();
     output = viewModel.transform(input);
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dashboard'),
+        title: Text(i18n.home_dashboard),
       ),
       body: Container(
         child: Center(
@@ -43,7 +43,7 @@ class AppView extends RxView<AppViewModel> {
                   onTap: () => input.toSceneTrigger.emit(item.scene),
                   child: ListTile(
                     leading: Icon(item.icon),
-                    title: Text(item.title),
+                    title: Text(item.title).defaultStyle(),
                   ),
                 ),
               );

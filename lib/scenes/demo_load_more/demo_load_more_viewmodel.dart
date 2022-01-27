@@ -1,12 +1,9 @@
 //ignore_for_file: close_sinks
-import 'package:pt_architecture/pt_architecture.dart';
 import 'package:get/get.dart' as GetX;
-import 'package:pt_clean_architecture/domain/entity/passenger.dart';
-import 'package:pt_clean_architecture/generated/rx_debug.g.dart';
+import 'package:pt_clean_architecture/domain/entity/article.dart';
 import 'package:pt_clean_architecture/scenes/demo_load_more/demo_load_more_navigator.dart';
 import 'package:pt_clean_architecture/scenes/demo_load_more/demo_load_more_usecase.dart';
-import 'package:tuple/tuple.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:pt_flutter_architecture/pt_flutter_architecture.dart';
 
 class DemoLoadMoreVMI {
   var loadTrigger = subject<void>();
@@ -15,7 +12,7 @@ class DemoLoadMoreVMI {
 }
 
 class DemoLoadMoreVMO {
-  var list = <Passenger>[].obs;
+  var list = <Article>[].obs;
   var isLoading = false.obs;
   var isRefreshing = false.obs;
   var isLoadingMore = false.obs;
@@ -26,27 +23,26 @@ class DemoLoadMoreViewModel
   DemoLoadMoreNavigatorType navigator;
   DemoLoadMoreSceneUseCaseType useCase;
 
-  DemoLoadMoreViewModel({required this.navigator, required this.useCase, args});
+  DemoLoadMoreViewModel({required this.navigator, required this.useCase});
 
   @override
   DemoLoadMoreVMO transform(DemoLoadMoreVMI input) {
     super.transform(input);
     var output = DemoLoadMoreVMO();
 
-    var result = getPage<Passenger>(GetPageInput(
+    var result = getPage<Article>(GetPageInput(
         loadTrigger: input.loadTrigger,
         reloadTrigger: input.reloadTrigger,
         loadMoreTrigger: input.loadMoreTrigger,
-        getItems: useCase.getPassenger,
-        loadMoreItems: (page) => useCase.getPassenger(page)));
+        getItems: useCase.getNews,
+        loadMoreItems: (page) => useCase.getNews(page)));
 
-    result.item.map((event) => event.items).drive(output.list).disposedBy(bag);
-
-    result.isLoading.drive(output.isLoading).disposedBy(bag);
-    result.isEmpty.drive().disposedBy(bag);
-    result.isLoadingMore.drive(output.isLoadingMore).disposedBy(bag);
-    result.isRefreshing.drive(output.isRefreshing).disposedBy(bag);
-    result.fetch.drive().disposedBy(bag);
+    result.item.map((s) => s.items).assign(output.list).disposedBy(bag);
+    result.isLoading.assign(output.isLoading).disposedBy(bag);
+    result.isEmpty.assign().disposedBy(bag);
+    result.isLoadingMore.assign(output.isLoadingMore).disposedBy(bag);
+    result.isRefreshing.assign(output.isRefreshing).disposedBy(bag);
+    result.fetch.assign().disposedBy(bag);
 
     // RxDebug.demoListViewModel(input, output);
 

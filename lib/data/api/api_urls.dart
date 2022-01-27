@@ -1,6 +1,6 @@
-import '../../flavors.dart';
+import 'package:pt_clean_architecture/scenes/app/app_flavors.dart';
 
 class APIUrls {
-  static String demo = "${BuildConfig.vrDomain}/demo";
-  static String passenger = "https://api.instantwebtools.net/v1/passenger";
+  static final endpoint = Flavors.instance.endpoint;
+  static String news = "$endpoint/v2/everything";
 }

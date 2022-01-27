@@ -1,9 +1,11 @@
-import 'package:flutter/widgets.dart';
+import 'package:pt_clean_architecture/assembler.dart';
 
 abstract class DemoLoadMoreNavigatorType {
-  void test();
+
 }
 
 class DemoLoadMoreNavigator implements DemoLoadMoreNavigatorType {
-  void test() {}
+  Assembler assembler;
+
+  DemoLoadMoreNavigator({required this.assembler});
 }

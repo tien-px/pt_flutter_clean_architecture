@@ -1,18 +1,19 @@
-import 'package:pt_architecture/pt_architecture.dart';
-import 'package:pt_clean_architecture/domain/usecase/validation/validation_usecase.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:pt_clean_architecture/domain/usecase/dto/login_dto.dart';
+import 'package:pt_clean_architecture/domain/usecase/keyboard/hide_keyboard.dart';
+import 'package:pt_flutter_architecture/pt_flutter_architecture.dart';
 
 abstract class LoginSceneUseCaseType {
   ValidationResult validateEmail(String email);
   ValidationResult validatePassword(String password);
-  Stream<void> login(String username, String password);
+  void hideKeyboard();
+  Stream<void> login(LoginDto dto);
 }
 
 class LoginSceneUseCase
-    with ValidationUseCase
+    with LoginDtoValidator, HideKeyboard
     implements LoginSceneUseCaseType {
   @override
-  Stream<void> login(String username, String password) {
+  Stream<void> login(LoginDto dto) {
     return Stream<void>.value(null).delay(Duration(seconds: 2));
   }
 }

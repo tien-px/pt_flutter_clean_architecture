@@ -1,6 +1,4 @@
-import 'package:pt_object_mapper/pt_object_mapper.dart';
-
-enum APIErrorType { validationError, unknown }
+import 'package:pt_flutter_object_mapper/pt_flutter_object_mapper.dart';
 
 class APIError with Mappable {
   String? resultCode;
@@ -8,16 +6,7 @@ class APIError with Mappable {
 
   @override
   void mapping(Mapper map) {
-    map("header.resultCode", resultCode, (v) => resultCode = v);
-    map("header.message", message, (v) => message = v);
-  }
-
-  APIErrorType get type {
-    switch (this.resultCode) {
-      case "9005":
-        return APIErrorType.validationError;
-      default:
-        return APIErrorType.unknown;
-    }
+    map("resultCode", resultCode, (v) => resultCode = v);
+    map("message", message, (v) => message = v);
   }
 }

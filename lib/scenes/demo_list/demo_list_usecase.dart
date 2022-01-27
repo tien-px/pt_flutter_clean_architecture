@@ -1,11 +1,11 @@
-import 'package:pt_architecture/pt_architecture.dart';
-import 'package:pt_clean_architecture/domain/entity/passenger.dart';
-import 'package:pt_clean_architecture/domain/usecase/passenger/passenger_usecase.dart';
+import 'package:pt_clean_architecture/domain/entity/article.dart';
+import 'package:pt_clean_architecture/domain/usecase/news/get_news.dart';
+import 'package:pt_flutter_architecture/pt_flutter_architecture.dart';
 
 abstract class DemoListSceneUseCaseType {
-  Stream<PagingInfo<Passenger>> getPassenger([int page]);
+  Stream<PagingInfo<Article>> getNews([int page = 1]);
 }
 
 class DemoListSceneUseCase
-    with PassengerUseCase
+    with GetNews
     implements DemoListSceneUseCaseType {}

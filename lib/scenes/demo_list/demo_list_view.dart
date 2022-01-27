@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pt_architecture/pt_architecture.dart';
-import 'package:pt_clean_architecture/domain/entity/passenger.dart';
-import 'package:pt_clean_architecture/scenes/app/app_pages.dart';
-import 'package:pt_clean_architecture/scenes/demo_list/get_table_view.dart';
 import 'package:pt_clean_architecture/scenes/demo_list/demo_list_viewmodel.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:pt_flutter_architecture/pt_flutter_architecture.dart';
 
 class DemoListView extends RxView<DemoListViewModel> {
-  late DemoListVMI input;
-  late DemoListVMO output;
+  late final DemoListVMI input;
+  late final DemoListVMO output;
+
+  DemoListView({required viewModel}) : super(viewModel: viewModel);
 
   @override
   void bindViewModel() {
@@ -32,15 +29,18 @@ class DemoListView extends RxView<DemoListViewModel> {
           isRefreshing: output.isRefreshing,
           isEmpty: output.isEmpty,
           child: Obx(() {
-            var demoList = output.list.value;
-            return ListView.builder(
+            var demoList = output.list;
+            return ListView.separated(
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
               itemCount: demoList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(demoList[index].name),
+                  title: Text(demoList[index].title ?? ""),
                 );
+              },
+              separatorBuilder: (context, index) {
+                return Divider(thickness: 2,);
               },
             );
           }),

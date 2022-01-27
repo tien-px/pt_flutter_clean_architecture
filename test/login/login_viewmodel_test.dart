@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:pt_architecture/pt_architecture.dart';
+import 'package:integration_test/integration_test.dart';
 import 'package:pt_clean_architecture/scenes/login/login_viewmodel.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:pt_flutter_architecture/pt_flutter_architecture.dart';
 
 import 'login_navigator_mock.dart';
 import 'login_usecase_mock.dart';
@@ -11,36 +11,75 @@ void main() {
   late LoginSceneUseCaseMock useCase;
   late LoginViewModel viewModel;
   late LoginVMI input;
-  late LoginVMO output;
-  late DisposeBag bag;
 
   setUp(() {
     navigator = LoginNavigatorMock();
     useCase = LoginSceneUseCaseMock();
     viewModel = LoginViewModel(navigator: navigator, useCase: useCase);
-    bag = DisposeBag();
     input = LoginVMI();
-    output = viewModel.transform(input);
+    viewModel.transform(input);
   });
 
-  tearDown(() async {
-    // await bag.dispose();
-  });
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('login_test', () {
+    test('hide_keyboard_when_login', () async {
+      /// Arrange
+      /// Act
+      await emit(input.loginTrigger);
+
+      /// Assert
+      expect(useCase.hideKeyboardCalled, true);
+    });
     test('validate_email', () async {
-      // Arrange
-      // Act
-      // await emit(loadTrigger);
-      // await emit(emailTrigger);
-      input.passwordTrigger.emit("");
-      input.emailTrigger.emit("");
-      input.loginTrigger.emit();
+      /// Arrange
+      /// Act
+      await emit(input.loginTrigger);
 
-      await waitForEmit();
+      /// Assert
+      expect(useCase.validateEmailCalled, true);
+    });
+    test('validate_password', () async {
+      /// Arrange
+      /// Act
+      await emit(input.loginTrigger);
 
-      // Assert
-      expect(navigator.toTest_Called, true);
+      /// Assert
+      expect(useCase.validatePasswordCalled, true);
+    });
+    test('validate_email_failed', () async {
+      /// Arrange
+      /// Act
+      await emit(input.emailTrigger, "123");
+      await emit(input.loginTrigger);
+
+      /// Assert
+      expect(useCase.validateEmailCalled, true);
+      expect(useCase.validateEmailReturnValue!.valid, false);
+    });
+    test('validate_password_failed', () async {
+      /// Arrange
+      /// Act
+      await emit(input.passwordTrigger, "");
+      await emit(input.loginTrigger);
+
+      /// Assert
+      expect(useCase.validatePasswordCalled, true);
+      expect(useCase.validatePasswordReturnValue!.valid, false);
+    });
+    test('login_success', () async {
+      /// Arrange
+      /// Act
+      await emit(input.emailTrigger, "test@gmail.com");
+      await emit(input.passwordTrigger, "123456");
+      await emit(input.loginTrigger);
+
+      /// Assert
+      expect(useCase.validateEmailCalled, true);
+      expect(useCase.validateEmailReturnValue!.valid, true);
+      expect(useCase.validatePasswordCalled, true);
+      expect(useCase.validatePasswordReturnValue!.valid, true);
+      expect(navigator.showLoginAlertCalled, true);
     });
   });
 }

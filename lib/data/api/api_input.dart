@@ -1,4 +1,4 @@
-import 'package:pt_architecture/pt_api_service.dart';
+import 'package:pt_flutter_architecture/pt_api_service.dart';
 
 class APIInput extends BaseAPIInput {
   APIInput(

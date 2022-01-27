@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pt_architecture/pt_architecture.dart';
-import 'package:pt_clean_architecture/domain/entity/passenger.dart';
-import 'package:pt_clean_architecture/scenes/app/app_pages.dart';
-import 'package:pt_clean_architecture/scenes/demo_list/get_table_view.dart';
 import 'package:pt_clean_architecture/scenes/demo_load_more/demo_load_more_viewmodel.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:pt_flutter_architecture/pt_flutter_architecture.dart';
 
 class DemoLoadMoreView extends RxView<DemoLoadMoreViewModel> {
-  late DemoLoadMoreVMI input;
-  late DemoLoadMoreVMO output;
+  late final DemoLoadMoreVMI input;
+  late final DemoLoadMoreVMO output;
+
+  DemoLoadMoreView({required viewModel}) : super(viewModel: viewModel);
 
   @override
   void bindViewModel() {
@@ -33,15 +30,18 @@ class DemoLoadMoreView extends RxView<DemoLoadMoreViewModel> {
           isRefreshing: output.isRefreshing,
           isLoadingMore: output.isLoadingMore,
           child: Obx(() {
-            var demoList = output.list.value;
-            return ListView.builder(
+            var demoList = output.list;
+            return ListView.separated(
               physics: const BouncingScrollPhysics(
                   parent: AlwaysScrollableScrollPhysics()),
               itemCount: demoList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(demoList[index].name),
+                  title: Text(demoList[index].title ?? ""),
                 );
+              },
+              separatorBuilder: (context, index) {
+                return Divider(thickness: 2,);
               },
             );
           }),

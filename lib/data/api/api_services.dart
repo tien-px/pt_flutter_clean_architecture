@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:pt_architecture/pt_api_service.dart';
+import 'package:pt_flutter_architecture/pt_api_service.dart';
 
 class API extends BaseAPIService {
   static final API shared = API._internal();
@@ -8,7 +8,12 @@ class API extends BaseAPIService {
     return shared;
   }
 
-  API._internal();
+  API._internal()
+      : super(BaseOptions(
+          connectTimeout: 30000,
+          sendTimeout: 30000,
+          receiveTimeout: 30000,
+        ));
 
   @override
   void handleResponseError(DioError error) {}
